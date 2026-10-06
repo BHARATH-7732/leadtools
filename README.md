@@ -26,6 +26,7 @@ extensions together in one modern web interface.
 -   🎨 Dynamic accent colors
 -   🖱️ Interactive 3D card hover effects
 -   📱 Responsive interface
+-   🧭 Category filters with live result counts
 
 ------------------------------------------------------------------------
 
@@ -72,6 +73,11 @@ access - Workflow testing
 **Timedatatrack** - Time tracking - Activity records - Data monitoring -
 Web-based workflow
 
+The active catalog contains 13 tools. Smart Exporter and Email Hunter,
+formerly numbered 11 and 14, plus ConsultAI Email Extractor, numbered 16,
+are no longer surfaced in the interface. All existing local files remain
+preserved in `downloads/`.
+
 ------------------------------------------------------------------------
 
 ## 🧩 Chrome Extensions
@@ -86,25 +92,15 @@ email research, and browser-based workflows.
                                                   collection and
                                                   structured export
 
-  11                      Smart Exporter          Filtered Go4Database
-                                                  extraction and CSV
-                                                  export
-
   12                      LI Prospect Finder      LinkedIn prospect
                                                   discovery
 
   13                      Snov.io                 Email finding and
                                                   verification
 
-  14                      Email Hunter            Email discovery and
-                                                  prospect research
-
   15                      Open Multiple URLs      Open multiple web pages
                                                   from a URL list
 
-  16                      ConsultAI Email         Extract unique emails
-                          Extractor               from paginated lead
-                                                  lists
   -----------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -135,37 +131,6 @@ Features:
 -   CSV export
 -   Webhook synchronization
 -   Browser-based extraction
-
-### 2. Smart Exporter
-
-**File:**
-
-``` text
-downloads/go4database-smart-exporter.zip
-```
-
-Features:
-
--   Industry filtering
--   Title filtering
--   Location filtering
--   IndexedDB storage
--   Deduplicated CSV export
-
-### 3. ConsultAI Email Extractor
-
-**File:**
-
-``` text
-downloads/consultai-email-extractor.zip
-```
-
-Features:
-
--   Extracts email addresses from lead tables
--   Works across paginated lead pages
--   Collects unique email addresses
--   One-click email collection
 
 > Other listed extensions may open their external/Chrome Web Store pages
 > instead of using a local ZIP download.
