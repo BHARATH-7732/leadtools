@@ -130,6 +130,53 @@ function showToast(message){
     }, 2200);
 }
 
+/* =========================================================
+   SEARCH AND CATEGORY FILTERS
+========================================================= */
+
+const searchInput = document.getElementById("toolSearch");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const toolCards = document.querySelectorAll(".card[data-category]");
+const resultsStatus = document.getElementById("resultsStatus");
+const noResults = document.getElementById("noResults");
+let activeFilter = "all";
+
+function updateToolResults(){
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    toolCards.forEach(card => {
+        const matchesCategory =
+            activeFilter === "all" || card.dataset.category === activeFilter;
+        const matchesSearch =
+            !query || card.textContent.toLowerCase().includes(query);
+        const visible = matchesCategory && matchesSearch;
+
+        card.classList.toggle("is-hidden", !visible);
+        if(visible) visibleCount += 1;
+    });
+
+    noResults.style.display = visibleCount ? "none" : "block";
+    resultsStatus.textContent = query
+        ? `Showing ${visibleCount} matching ${visibleCount === 1 ? "tool" : "tools"}`
+        : `Showing ${visibleCount} ${visibleCount === 1 ? "tool" : "tools"}`;
+}
+
+searchInput.addEventListener("input", updateToolResults);
+
+filterButtons.forEach(button => {
+    button.setAttribute("aria-pressed", button.classList.contains("is-active"));
+    button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        filterButtons.forEach(item => {
+            const isActive = item === button;
+            item.classList.toggle("is-active", isActive);
+            item.setAttribute("aria-pressed", isActive);
+        });
+        updateToolResults();
+    });
+});
+
 
 /* =========================================================
    3D CARD MOUSE EFFECT
@@ -200,12 +247,9 @@ const shareData = {
     "temp-mail":{name:"Temp Mail",description:"Temporary email service for disposable email access."},
     timedatatrack:{name:"Timedatatrack",description:"Web-based time and data tracking application."},
     omni:{name:"Google Map Scraper",description:"Chrome extension for Google Maps lead collection."},
-    smart:{name:"Smart Exporter",description:"Chrome extension for filtered data extraction and CSV export."},
     "li-prospect":{name:"LI Prospect Finder",description:"Chrome extension for LinkedIn prospect discovery."},
     snov:{name:"Snov.io",description:"Chrome extension for email finding and verification."},
-    "email-hunter":{name:"Email Hunter",description:"Chrome extension for email discovery and prospect research."},
     "open-multiple-urls":{name:"Open Multiple URLs",description:"Chrome extension for opening multiple web pages from a list of URLs."},
-    "consultai-email-extractor":{name:"ConsultAI Email Extractor",description:"Chrome extension for extracting unique emails from paginated lead lists."}
 };
 
 document.querySelectorAll(".share").forEach(button => {
@@ -319,24 +363,6 @@ const modalData = {
         `
     },
 
-    smart:{
-        title:"Smart Exporter",
-        body:`
-            <p>
-                Smart Exporter focuses on targeted
-                Go4Database extraction with filters
-                and local browser storage.
-            </p>
-
-            <ul>
-                <li>Industry filtering</li>
-                <li>Title filtering</li>
-                <li>Location filtering</li>
-                <li>IndexedDB storage</li>
-                <li>Deduplicated CSV export</li>
-            </ul>
-        `
-    }
 };
 
 const toolsInfo = {
@@ -350,12 +376,9 @@ const toolsInfo = {
     "temp-mail":{title:"Temp Mail",description:"Temporary email service for quick disposable email access and email workflow testing.",points:["Temporary email address","Disposable inbox","Quick email access","Useful for workflow testing"]},
     timedatatrack:{title:"Timedatatrack",description:"Web-based time and data tracking application.",points:["Time tracking","Activity records","Data monitoring","Web-based workflow"]},
     omni:{title:"Google Map Scraper",description:"Google Maps lead collection and structured export workflows.",points:["Google Maps lead collection","CSV export","Webhook synchronization","Browser-based extraction"]},
-    smart:{title:"Smart Exporter",description:"Targeted data extraction with filters and local browser storage.",points:["Industry filtering","Title filtering","Location filtering","IndexedDB storage","Deduplicated CSV export"]},
     "li-prospect":{title:"LI Prospect Finder",description:"LinkedIn-focused prospect discovery and lead research.",points:["LinkedIn prospect discovery","Lead profile extraction","Prospecting workflow","LinkedIn-focused research"]},
     snov:{title:"Snov.io",description:"Email discovery and verification for B2B prospecting.",points:["Email finder","Email verification","Lead prospecting","Contact discovery"]},
-    "email-hunter":{title:"Email Hunter",description:"Chrome extension for discovering email contacts during prospect research.",points:["Email discovery","Prospect research","Contact finding","Browser-based workflow"]},
     "open-multiple-urls":{title:"Open Multiple URLs",description:"Chrome extension for opening multiple web pages from a list of URLs.",points:["Multiple URL opening","Bulk browser workflow","Faster web research","Chrome-based utility"]},
-    "consultai-email-extractor":{title:"ConsultAI Email Extractor",description:"Chrome extension for extracting unique emails from paginated lead lists.",points:["Extracts email addresses from lead tables","Works across paginated lead pages","Collects unique email addresses","One-click email collection"]}
 };
 
 document.querySelectorAll(".details").forEach(button => {
